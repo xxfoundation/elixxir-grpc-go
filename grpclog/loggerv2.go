@@ -25,8 +25,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"strconv"
-	"strings"
 
 	"google.golang.org/grpc/internal/grpclog"
 )
@@ -144,27 +142,27 @@ func newLoggerV2() LoggerV2 {
 	warningW := ioutil.Discard
 	infoW := ioutil.Discard
 
-	logLevel := os.Getenv("GRPC_GO_LOG_SEVERITY_LEVEL")
-	switch logLevel {
-	case "", "ERROR", "error": // If env is unset, set level to ERROR.
-		errorW = os.Stderr
-	case "WARNING", "warning":
-		warningW = os.Stderr
-	case "INFO", "info":
-		infoW = os.Stderr
-	}
+	// logLevel := os.Getenv("GRPC_GO_LOG_SEVERITY_LEVEL")
+	// switch logLevel {
+	// case "", "ERROR", "error": // If env is unset, set level to ERROR.
+	// 	errorW = os.Stderr
+	// case "WARNING", "warning":
+	// 	warningW = os.Stderr
+	// case "INFO", "info":
+	// 	infoW = os.Stderr
+	// }
 
-	var v int
-	vLevel := os.Getenv("GRPC_GO_LOG_VERBOSITY_LEVEL")
-	if vl, err := strconv.Atoi(vLevel); err == nil {
-		v = vl
-	}
+	// var v int
+	// vLevel := os.Getenv("GRPC_GO_LOG_VERBOSITY_LEVEL")
+	// if vl, err := strconv.Atoi(vLevel); err == nil {
+	// 	v = vl
+	// }
 
-	jsonFormat := strings.EqualFold(os.Getenv("GRPC_GO_LOG_FORMATTER"), "json")
+	// jsonFormat := strings.EqualFold(os.Getenv("GRPC_GO_LOG_FORMATTER"), "json")
 
 	return newLoggerV2WithConfig(infoW, warningW, errorW, loggerV2Config{
-		verbose:    v,
-		jsonFormat: jsonFormat,
+		verbose:    0,
+		jsonFormat: false,
 	})
 }
 
